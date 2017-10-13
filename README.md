@@ -1,4 +1,4 @@
-copie du texte de gogle/doc
+ocopie du texte de gogle/doc
 
 # The-Global-Freelancing-Dapp
 
