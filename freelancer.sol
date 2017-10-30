@@ -13,7 +13,7 @@ contract Freelancer {
         uint EmindhubIndentifier;        // identifiant du freelance sur EmindHub
         uint CommunityNumber;           // 0 pour OpenExpert Service Provider  1 pour Emindhub    
         uint State;                      // inactif 0 actif 1
-        int ContributionRating;        // represente l implication dans la communauté, attention au type uint et int
+        int ContributionRating;        // represente l implication dans la communautÃ©, attention au type uint et int
         int ContributionRatingBlock;   // pour gere la decay, on met le muneto de block last upate
         uint ClientRating1;           // 4 dernieres evaluations clients
         uint ClientRating2;
@@ -26,16 +26,16 @@ contract Freelancer {
     uint Index=0;                           // index du compteur
     
 // creator, initialisation
-// creation en dur du freelancer Thierry sur la communauté OpenExpert Serice Provider (adresse sur sur Ropsten) 
+// creation en dur du freelancer Thierry sur la communautÃ© OpenExpert Serice Provider (adresse sur sur Ropsten) 
 // avec rating de contribtion de 50 et les 4 dernieres evaluations 
-// client a 10. La dernier cacul de cntribution avec decay réalisé au block 4400000
+// client a 10. La dernier cacul de cntribution avec decay rÃ©alisÃ© au block 4400000
     function Freelancer() {
         freelancerdata[0x87B787CD17a8D68db002f806cC0A3DA323EaC25a] = CommunityMember (0,1,50,4400000,10,10,10,10);
         ArrayFreelancerIndex[1]=(0x87B787CD17a8D68db002f806cC0A3DA323EaC25a);
         Index+=1;
     }
 //
-// mise a jour de la dernieres evaluation client pour un freelance, l eval 4 est recopiée dans la 3 etc
+// mise a jour de la dernieres evaluation client pour un freelance, l eval 4 est recopiÃ©e dans la 3 etc
     
     function updateclientrating(address AddressFreelancer, uint LastRating) {
         freelancerdata[AddressFreelancer].ClientRating1=freelancerdata[AddressFreelancer].ClientRating2;
@@ -52,7 +52,7 @@ contract Freelancer {
         freelancerdata[AddressFreelancer].ContributionRatingBlock= int(block.number); // mise a jour de la date du dernier calcul de reputation
     }
 // freelancer registration 
-// par defaut tout est à 0
+// par defaut tout est Ã  0
 // comunitynumber = 1 pour emindhub, 0 pour services providers -founder, etc)    
     function registration(unit EmindhubIdentifier, uint Community){
         freelancerdata[msg.sender].EmindhubIdentifier = EmindhubIdentifier; 
