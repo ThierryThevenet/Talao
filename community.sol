@@ -5,7 +5,7 @@ contract Community {
         string CommunityName;
         uint CommunityState;                        // 0 inactif 1 actif
         uint CommunityType;                         // 0 open, 1 private
-        uint CommunitySponsor;                      // si privée reference client
+        uint CommunitySponsor;                      // si privÃ©e reference client
         uint CommunityBalanceForVoting;              // balance pour le vote 10 => 10% token et 90% reputation   
         uint CommunityMinimumToken;                 // nbn minimum de token pour voter
         uint CommunityMinimumReputation;                 //nb minimum de reputation pour voter    
