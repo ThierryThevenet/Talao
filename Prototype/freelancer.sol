@@ -10,9 +10,9 @@ contract Freelancer {
  //
 // descriptif d un freelancer  
     struct CommunityMember {
-        address CommunityAddress;           // ref de la comunauté du freelancer  
+        address CommunityAddress;           // ref de la comunautÃ© du freelancer  
         uint State;                      // inactif 0 actif 1
-        int ContributionRating;        // represente l implication dans la communauté, attention au type uint et int
+        int ContributionRating;        // represente l implication dans la communautÃ©, attention au type uint et int
         int ContributionRatingBlock;   // pour gere la decay, on met le muneto de block last upate
         uint ClientRating1;           // 4 dernieres evaluations clients
         uint ClientRating2;
@@ -43,12 +43,12 @@ contract Freelancer {
 
     
 // creator, initialisation
-// creation en dur du freelancer Thierry sur la communauté OpenExpert Service Provider (adresse sur sur Ropsten) 
+// creation en dur du freelancer Thierry sur la communautÃ© OpenExpert Service Provider (adresse sur sur Ropsten) 
 // avec rating de contribtion de 50 et les 4 dernieres evaluations 
-// client a 10. La dernier cacul de cntribution avec decay réalisé au block 4400000
+// client a 10. La dernier cacul de cntribution avec decay rÃ©alisÃ© au block 4400000
     function Freelancer() {
-        address OpenExpert = (0xF82076776FeF59Ad28d4E1dEa91f366deCef0CA6);  // la communauté OpenExpert Serive Providr
-        address Aerospace = (0xD53F199C942638BaC5E65C48B6D1555c1e226140);    // la communauté aerospace Emindhub
+        address OpenExpert = (0xF82076776FeF59Ad28d4E1dEa91f366deCef0CA6);  // la communautÃ© OpenExpert Serive Providr
+        address Aerospace = (0xD53F199C942638BaC5E65C48B6D1555c1e226140);    // la communautÃ© aerospace Emindhub
         address Thierry_founder = (0x3923B7c310C045Ca72e405DbDd052e968eAF7e25);
         address Thierry_freelance = (0x87B787CD17a8D68db002f806cC0A3DA323EaC25a);     
         
@@ -57,7 +57,7 @@ contract Freelancer {
       
             }
 //
-// mise a jour de la dernieres evaluation client pour un freelance, l eval 4 est recopiée dans la 3 etc
+// mise a jour de la dernieres evaluation client pour un freelance, l eval 4 est recopiÃ©e dans la 3 etc
     
     function registeraclientrating(address AddressFreelancer, uint LastRating) {
         freelancerdata[AddressFreelancer].ClientRating1=freelancerdata[AddressFreelancer].ClientRating2;
@@ -74,8 +74,8 @@ contract Freelancer {
         freelancerdata[AddressFreelancer].ContributionRatingBlock= int(block.number); // mise a jour de la date du dernier calcul de reputation
     }
 // freelancer registration with Drupal Hash as key 
-// par defaut tout est à 0
-//     je suppose que l adresse de la communauté est connue a l initialisation
+// par defaut tout est Ã  0
+//     je suppose que l adresse de la communautÃ© est connue a l initialisation
 //
     function newfreelancer(bytes32 drupalUserHash, address AddressCommunity){
        
