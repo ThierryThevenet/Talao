@@ -11,7 +11,7 @@ contract Community {
         string CommunityName;
         uint CommunityState;                        // 0 inactif 1 actif
         uint CommunityType;                         // 0 open, 1 private
-        uint CommunitySponsor;                      // si privÈe reference client
+        uint CommunitySponsor;                      // si priv√©e reference client
         uint CommunityBalanceForVoting;              // balance pour le vote 10 => 10% token et 90% reputation   
         uint CommunityMinimumToken;                 // nbn minimum de token pour voter
         uint CommunityMinimumReputation;                 //nb minimum de reputation pour voter    
@@ -19,14 +19,14 @@ contract Community {
     } 
     
     mapping(address => CommunityStruct) MapCommunityStruct;
-    mapping(address=>mapping(uint=>address))  MapFreelancer;        //address des freelancer par comunautÈ
+    mapping(address=>mapping(uint=>address))  MapFreelancer;        //address des freelancer par comunaut√©
 
    
-// initialisation avec 2 communautÈs
+// initialisation avec 2 communaut√©s
 // creator
     function Community(){
-        address OpenExpert = (0xF82076776FeF59Ad28d4E1dEa91f366deCef0CA6);  // la communautÈ OpenExpert Serive Providr
-        address Aerospace = (0xD53F199C942638BaC5E65C48B6D1555c1e226140);    // la communautÈ aerospace Emindhub
+        address OpenExpert = (0xF82076776FeF59Ad28d4E1dEa91f366deCef0CA6);  // la communaut√© OpenExpert Serive Providr
+        address Aerospace = (0xD53F199C942638BaC5E65C48B6D1555c1e226140);    // la communaut√© aerospace Emindhub
       
         MapCommunityStruct[OpenExpert]= CommunityStruct ('OpenExpert Serice Provider',1,1,0,100,0,0,0);
         MapCommunityStruct[Aerospace]= CommunityStruct ('Aerospace Experts',1,1,0,10,10,10,0);
