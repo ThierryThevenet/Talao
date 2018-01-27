@@ -37,21 +37,13 @@ contract Community is Ownable {
     uint    public communityMemberFees;                     // fees to join = 0 ;
     address[] public CommunityMembers;                      // freelancer list
     
-    MyAdvancedToken public mytoken;
+    FOW public mytoken;
     uint256 public communityTokenBalance;                        //  pour test
     
     event CommunitySubscription(address indexed freelancer, bool msg); 
 
-    function Community(address token,
-                            string name, 
-                            uint comtype,
-                            uint balance,
-                            uint mintoken,
-                            uint minreputation,
-                            uint com,
-                            uint fees) public
-    {
-        mytoken = MyAdvancedToken (token);
+    function Community(address token, string name, uint comtype, uint balance, uint mintoken, uint minreputation, uint com, uint fees) public {
+        mytoken = FOW(token);
         communityName = name;
         communityType = comtype;
         communityState = 1;
@@ -108,16 +100,15 @@ contract Community is Ownable {
 //
 //
 
-contract CommunityFabriq is Owned {
-    
-    MyAdvancedToken public mytoken;
+contract CommunityFabriq is Ownable {    
+    FOW public mytoken;
     Community public newcommunity;            // pour test
   
     event CommunityListing(address community );
     
     function CommunityFabriq (address token) public {
         require (token != address(0x0));
-        mytoken = MyAdvancedToken (token);
+        mytoken = FOW(token);
     }
     
     /**
