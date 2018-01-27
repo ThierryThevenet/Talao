@@ -1,6 +1,6 @@
 /* TODO:
  *   [x] import `Owned` contract from open-zeppelin
- *   [ ] `communityMembers` state variable should be bool map
+ *   [x] `communityMembers` state variable should be bool map
  *   [ ] `communityState` should be renamed `active` and typed bool
  *   [ ] `communityType` should be either enum or bool (in which case renamed)
  *   [ ] `communityBalanceForVoting` is outdated
