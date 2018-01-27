@@ -34,8 +34,8 @@ contract Community is Ownable {
     uint    public communityMinimumReputation;              // min reputation to vote    
     uint    public communityJobCom;                         // x 1/10000 commission on job = 0 at bootstrap. 100 means 1%      
     uint    public communityMemberFees;                     // fees to join = 0 ;
-    address[] public CommunityMembers;                      // freelancer list
-    
+    mapping(address => bool) public members;
+
     MyAdvancedToken public mytoken;
     uint256 public communityTokenBalance;                        //  pour test
     
@@ -62,7 +62,7 @@ contract Community is Ownable {
     }
 
     function joinCommunity() public {
-        CommunityMembers.push(msg.sender);
+        members[msg.sender] = true;
         CommunitySubscription(msg.sender, true);
     }
 
@@ -70,17 +70,11 @@ contract Community is Ownable {
      * This removes one freelance from the community and updates the array CommunityMembers
      */
     function leaveCommunity() public {
-        for (uint i = 0; i < CommunityMembers.length - 1; i++) {
-            if (CommunityMembers[i] == msg.sender) {
-                for (uint j = i; j < CommunityMembers.length - 1; j++) {
-                    CommunityMembers[j] = CommunityMembers[j + 1];
-                }
-            delete CommunityMembers[CommunityMembers.length-1];
-            CommunityMembers.length--;
-            CommunitySubscription(msg.sender, false);
-            return;
-            }
-        }    
+        if (!members[msg.sender])  // not a member
+            revert();
+
+        members[msg.sender] = false;
+        CommunitySubscription(msg.sender, false);
     }
     
     /**
