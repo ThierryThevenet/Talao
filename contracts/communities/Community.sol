@@ -1,6 +1,5 @@
 /* TODO:
- *   [ ] import `Owned` contract from open-zeppelin
- *   [ ] store token address instead of contract for `mytoken`
+ *   [x] import `Owned` contract from open-zeppelin
  *   [ ] `communityMembers` state variable should be bool map
  *   [ ] `communityState` should be renamed `active` and typed bool
  *   [ ] `communityType` should be either enum or bool (in which case renamed)
@@ -22,7 +21,7 @@
 pragma solidity ^0.4.18;
 
 import "../zeppelin-solidity/contracts/ownership/Ownable.sol";
-import "./FOWToken.sol";
+import "./AdvancedToken.sol";
 
 
 contract Community is Ownable {
@@ -37,13 +36,13 @@ contract Community is Ownable {
     uint    public communityMemberFees;                     // fees to join = 0 ;
     address[] public CommunityMembers;                      // freelancer list
     
-    FOW public mytoken;
+    MyAdvancedToken public mytoken;
     uint256 public communityTokenBalance;                        //  pour test
     
     event CommunitySubscription(address indexed freelancer, bool msg); 
 
     function Community(address token, string name, uint comtype, uint balance, uint mintoken, uint minreputation, uint com, uint fees) public {
-        mytoken = FOW(token);
+        mytoken = MyAdvancedToken(token);
         communityName = name;
         communityType = comtype;
         communityState = 1;
@@ -101,14 +100,14 @@ contract Community is Ownable {
 //
 
 contract CommunityFabriq is Ownable {    
-    FOW public mytoken;
+    MyAdvancedToken public mytoken;
     Community public newcommunity;            // pour test
   
     event CommunityListing(address community );
     
     function CommunityFabriq (address token) public {
         require (token != address(0x0));
-        mytoken = FOW(token);
+        mytoken = MyAdvancedToken(token);
     }
     
     /**

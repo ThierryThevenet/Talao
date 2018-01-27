@@ -2,7 +2,7 @@
  *   [ ] import `Owned` contract from open-zeppelin
  *   [ ] event DigitalCertificateVault uint msg shoud be enum
  *   [ ] store token address instead of contract for `mytoken`
- *   [ ] event VaultCreation uint msg should be enum
+ *   [x] event VaultCreation uint msg should be enum
  *   [x] clean code
  */
 
@@ -19,7 +19,7 @@
 pragma solidity ^0.4.18;
 
 import "../zeppelin-solidity/contracts/ownership/Ownable.sol";
-import "./Token.sol";
+import "./AdvancedToken.sol";
 
 
 // Digital Vault smart contract for each talent
@@ -113,15 +113,15 @@ contract DigitalVault is Ownable {
 // This contract deploys DigitalVault contracts
 contract DigitalVaultFactory is Ownable {
     uint public nbVault;
-    address public newvault;                                                    // pour test
-    MyAdvancedToken mytoken;   
+    address public newvault;  // pour test
+    MyAdvancedToken mytoken;
 
     mapping (address=>address) public FreelanceVault; 
     
     // msg = 0 user did not open an access to open a vault
     // msg = 1 vault already exists
     // msg = 5 Vault created
-    event VaultCreation (address indexed talent, address vaultadddress, uint msg);
+    event VaultCreation(address indexed talent, address vaultadddress, uint msg);
 
     function DigitalVaultFactory(address token) public {
         mytoken = MyAdvancedToken(token);
@@ -133,7 +133,7 @@ contract DigitalVaultFactory is Ownable {
      */
     function createVaultContract () public {
         if (!mytoken.AccessAllowance(msg.sender, msg.sender)) {
-            VaultCreation (msg.sender, myvault, 0);
+            VaultCreation(msg.sender, myvault, 0);
             return;
         }
 
