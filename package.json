@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ThierryThevenet/Talao/issues"
   },
-  "homepage": "https://github.com/ThierryThevenet/Talao#readme"
+  "homepage": "https://github.com/ThierryThevenet/Talao#readme",
+  "dependencies": {
+    "zeppelin-solidity": "1.6.0"
+  }
 }
