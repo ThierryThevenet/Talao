@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import "../zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "../../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./FOWToken.sol";
 
 

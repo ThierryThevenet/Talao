@@ -32,8 +32,8 @@
 
 pragma solidity ^0.4.18;
 
-import "../zeppelin-solidity/contracts/ownership/Ownable.sol";
-import "../zeppelin-solidity/contracts/token/StandardToken.sol";
+import "../../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "../../node_modules/zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
 
 // is this in zeppelin-solidity?
 interface tokenRecipient {
