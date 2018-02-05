@@ -1,0 +1,19 @@
+{
+  "name": "talao",
+  "version": "1.0.0",
+  "description": "Talao, a DAO for the future of work.",
+  "main": "truffle.js",
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThierryThevenet/Talao.git"
+  },
+  "author": "EMindHub",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThierryThevenet/Talao/issues"
+  },
+  "homepage": "https://github.com/ThierryThevenet/Talao#readme"
+}
