@@ -38,6 +38,8 @@ contract RankedBallotBase {
 contract WeightedBallotBase {
     // this mapping is a memory for withdrawals
     mapping(address => uint) weights;
+
+    // can have side effects to enforce single vote
     function ensureWeight(address voter) internal returns (uint weight);
 }
 
@@ -63,20 +65,19 @@ contract Deadlined {
 // votes are weighed by blocking voters' tokens
 // this contract allows multiple votes, but votes may not be taken back
 contract TokenWeighted is WeightedBallotBase, Deadlined {
-    address public token;
+    ERC20 public token;
 
     function TokenWeighted(address _token) public {
-        token = _token;
+        token = ERC20(_token);
     }
 
     function ensureWeight(address voter) internal returns (uint weight) {
         // get voter's weight through interaction - Weight contract should be safe
-        ERC20 tokenContract = ERC20(token);
-        weight = tokenContract.allowance(voter, address(this));
+        weight = token.allowance(voter, address(this));
 
         // check voter can vote & vote is legal
         require(weight > 0);
-        require(tokenContract.transferFrom(voter, address(this), weight));
+        require(token.transferFrom(voter, address(this), weight));
 
         // remember weight for withdrawals
         // "+=" in case this is not the voter's first vote
@@ -88,12 +89,11 @@ contract TokenWeighted is WeightedBallotBase, Deadlined {
     // this should be protected from reentrancy
     function withdraw() public onlyAfter {
         // check & effects
-        ERC20 tokenContract = ERC20(token);
         uint weight = weights[msg.sender];
         weights[msg.sender] = 0;
 
         // interaction
-        bool success = tokenContract.approve(msg.sender, weight);
+        bool success = token.approve(msg.sender, weight);
         require(success);
     }
 }

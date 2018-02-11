@@ -5,6 +5,7 @@
  *   - ...
  *   - ...
  *
+ * // cite H.P. Young
  * ELecting the Borda winner has some advantages. // todo list them again
  * Voters provide a ranking of all the (n) options ; each of the latter is
  * awarded points according to their spot on the ranking:
