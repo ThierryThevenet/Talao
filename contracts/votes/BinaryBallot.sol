@@ -21,7 +21,7 @@ contract MajorityBallot is BinaryBallotBase, TokenWeighted {
     event Election(uint yea, uint nay);
 
     /* METHODS */
-    function MajorityBallot(bytes32 _proposal, uint length) public {
+    function MajorityBallot(bytes32 _proposal, uint length, address _token) TokenWeighted(_token) public {
         proposal = _proposal;
         deadline = now + length;
     }
