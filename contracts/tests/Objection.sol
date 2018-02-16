@@ -58,7 +58,7 @@ contract Objectionable {
         voting = true;
         suggested = suggestedValue;
 
-        MajorityBallot ball = new MajorityBallot(param.description(), 100, token);
+        MajorityBallot ball = new MajorityBallot(param.description(), 1 minutes, token);
         ballot = address(ball);
         return true;
     }
