@@ -129,6 +129,6 @@ contract CommunityFabriq is Ownable {
      *     Prevents accidental sending of ether to the factory
      */
     function () public {
-        throw;
+        revert();
     }
 }
