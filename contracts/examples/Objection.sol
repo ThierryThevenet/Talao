@@ -32,15 +32,49 @@ contract Objectionable {
     address public token;
     address public ballot;
 
-    // voting indicates if objection is in the works
-    bool public voting;
-    uint public suggested;  // only has meaning when voting is true
+    /**
+     * @dev see state transition functions below.
+     */
+    enum State {
+        Waiting,
+        Objecting,
+        Disputing
+    }
+
+    State public state = State.Waiting;
+
+    // meaning depends on state
+    uint public delay = 3 days;
+    uint public suggested;
+    uint public deadline;
 
     // event to indicate the modification of a parameter
     event Modification(address indexed parameter, uint newValue);
+    event Objection(address indexed objector, uint suggestedValue);
+    event Dispute(address indexed disputor);
 
-    modifier whenVotingIs(bool state) {
-        require(state == voting);
+    modifier when(State _state) {
+        require(state == _state);
+        _;
+    }
+
+    modifier beforeDeadline {
+        require(now <= deadline);
+        _;
+    }
+
+    modifier afterDeadline {
+        require(now > deadline);
+        _;
+    }
+
+    modifier beforeExpiration {
+        require(now <= deadline + delay);
+        _;
+    }
+
+    modifier afterExpiration {
+        require(now > deadline + delay);
         _;
     }
 
@@ -51,33 +85,61 @@ contract Objectionable {
     }
 
     /**
-     * @dev launch a new objection if none is already there.
-     * This will deploy a new binary voting contract and record its address.
+     * @dev reset the contract's state to `State.Waiting` after expiration of
+     * the state transition function's validity.
      */
-    function object(uint suggestedValue) whenVotingIs(false) public returns (bool) {
-        voting = true;
-        suggested = suggestedValue;
+    function reset() afterExpiration() public returns (bool) {
+        state = State.Waiting;
+        return true;
+    }
 
-        MajorityBallot ball = new MajorityBallot(param.description(), 2 seconds, token);
+    /**
+     * @dev launch a new objection, suggesting a new value for the concerned
+     * parameter.
+     */
+    function object(uint suggestedValue) when(State.Waiting) public returns (bool) {
+        state = State.Objecting;
+        suggested = suggestedValue;
+        deadline = now + delay;
+
+        Objection(msg.sender, suggestedValue);
+        return true;
+    }
+
+    /**
+     * @dev dispute the current objection by starting a vote whose outcome will
+     * decide on whether the objection's suggestion is adopted.
+     */
+    function dispute() when(State.Objecting) beforeDeadline() public returns (bool) {
+        state = State.Disputing;
+        deadline = now + delay;  // voting deadline
+
+        Dispute(msg.sender);
+        MajorityBallot ball = new MajorityBallot(param.description(), delay, token);
         ballot = address(ball);
         return true;
     }
 
     /**
-     * @dev execute objection if the vote indicates a victory.
-     * Calling `execute` will publish an event to advertise the modification of
-     * our parameter.
+     * @dev executes the suggested change of an objection without vote as no
+     * dispute was launched during the allowed period.
      */
-    function execute() whenVotingIs(true) public returns (bool) {
-        voting = false;
+    function executeWithoutVote() when(State.Objecting) afterDeadline() beforeExpiration() public returns (bool) {
+        state = State.Waiting;
+        require(param.set(suggested));
+        Modification(address(param), suggested);
+        return true;
+    }
 
-        // if the vote is not over, this will throw (through a `require` call)
+    /**
+     * @dev check the results of a vote following a dispute ; whether a change
+     * in the parameter's value is effected depends in the results of said vote.
+     */
+    function checkResults() when(State.Disputing) afterDeadline() beforeExpiration() public returns (bool) {
+        state = State.Waiting;
         if (MajorityBallot(ballot).elect()) {
-            // assert modification was successful & publish event
             require(param.set(suggested));
             Modification(address(param), suggested);
         }
-
-        ballot = address(0);
     }
 }
