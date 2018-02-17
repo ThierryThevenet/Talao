@@ -9,14 +9,14 @@ import "../votes/BinaryBallot.sol";
  * @title Token
  * @dev dummy token as a way to weigh votes.
  */
-contract Token is StandardToken {
+contract DummyToken is StandardToken {
     string public name = "Token";
     string public symbol = "T";
     uint8 public decimals = 18;
 
     // 100 dummy tokens
-    function Token(address initialAccount, uint256 totalSupply) public {
-        totalSupply = 100 * 10 ** uint256(decimals);
+    function DummyToken(address initialAccount, uint256 _totalSupply) public {
+        uint totalSupply = _totalSupply * 10 ** uint256(decimals);
         balances[initialAccount] = totalSupply;
     }
 }
@@ -58,7 +58,7 @@ contract Objectionable {
         voting = true;
         suggested = suggestedValue;
 
-        MajorityBallot ball = new MajorityBallot(param.description(), 1 minutes, token);
+        MajorityBallot ball = new MajorityBallot(param.description(), 2 seconds, token);
         ballot = address(ball);
         return true;
     }

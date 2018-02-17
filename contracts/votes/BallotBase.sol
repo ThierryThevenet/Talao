@@ -82,7 +82,7 @@ contract TokenWeighted is WeightedBallotBase, Deadlined {
         // remember weight for withdrawals
         // "+=" in case this is not the voter's first vote
         // inheriting contracts must enforce single votes if they need to
-        weights[msg.sender] += weight;
+        weights[voter] += weight;
         return weight;
     }
 
