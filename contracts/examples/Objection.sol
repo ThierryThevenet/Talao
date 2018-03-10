@@ -1,3 +1,17 @@
+/** Implementation of the Objection contract.
+ *
+ * An objection is used to control the value of a parameter (see Parameter.sol)
+ * through a voting mechanism.
+ *
+ * The flow goes as follows:
+ *  1. Someone suggests a new valule for the parameter through the `object`
+ *     method,
+ *  2. If nobody disputes the suggestion, it is executable after a delay. Else,
+ *     a vote is launched.
+ *  3. If the vote indicates a yea, the modification is executable, else it is
+ *     discarded.
+ */
+
 pragma solidity ^0.4.18;
 
 import "../../node_modules/zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";

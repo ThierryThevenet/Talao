@@ -1,7 +1,4 @@
 /** Implementation of the majority winner
- *
- * This contract can be inherited to implement a vote weighting mechanism
- * through the `ensureWeight` method.
  */
 
 pragma solidity ^0.4.18;
